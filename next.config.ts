@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // Next.js 16: serverExternalPackages replaces experimental.serverComponentsExternalPackages
+  serverExternalPackages: ["pdf-parse", "mammoth"],
 };
 
 export default nextConfig;

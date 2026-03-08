@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Audify — PDF to Audio
 
-## Getting Started
+> Convert your lecture slides, textbooks, and documents into audio. Learn on the go.
 
-First, run the development server:
+---
+
+## Quick Start
 
 ```bash
+# 1. Install
+npm install
+
+# 2. Set up environment
+cp .env.local.example .env.local
+# → Add your free Gemini API key (see below)
+
+# 3. Run
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Getting Your Free Gemini API Key
 
-## Learn More
+1. Go to **[aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)**
+2. Sign in with Google → click **Create API key**
+3. Add to `.env.local`:
+```env
+GEMINI_API_KEY=AIzaSy...
+```
 
-To learn more about Next.js, take a look at the following resources:
+Free limits: **15 req/min · 1M tokens/day · no credit card needed**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- **Drag & drop upload** — PDF, DOCX, PPTX, TXT (up to 50 MB)
+- **Conversion pipeline** — text extraction with real-time progress steps
+- **Audio player** — waveform visualisation, seek, skip ±15/30s, speed 0.5×–2×, volume
+- **AI Summary** — Gemini generates text summary + key bullet points + audio version
+- **Library** — persisted history of all conversions with summary badges
+- **Settings** — auto-summarise, default voice, default speed
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS v4 |
+| State | Zustand v5 (with persist) |
+| Data fetching | TanStack Query v5 |
+| Validation | Zod v3 |
+| Icons | Lucide React |
+| AI (Summary) | Google Gemini 1.5 Flash (free tier) |
+| PDF parsing | pdf-parse |
+| DOCX parsing | mammoth |
+| Toasts | Sonner |
+| Fonts | Playfair Display · DM Sans · DM Mono |
+
+---
+
+## Documentation
+
+| File | Contents |
+|---|---|
+| `docs/SETUP.md` | Full install guide + troubleshooting |
+| `docs/ARCHITECTURE.md` | Code structure, data flow, design decisions |
+| `docs/ADDING_REAL_TTS.md` | How to wire ElevenLabs / OpenAI / Google TTS |
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/                  Next.js routes + API handlers
+├── components/           UI components (layout, upload, player, summary)
+├── hooks/                TanStack Query mutations
+├── lib/                  Utilities, Zod schemas, constants
+├── store/                Zustand stores
+└── types/                TypeScript interfaces
+```
+
+---
+
+## Deploy to Vercel
+
+```bash
+vercel --prod
+```
+
+Add `GEMINI_API_KEY` in Vercel → Project → Settings → Environment Variables.
