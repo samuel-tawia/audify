@@ -103,7 +103,6 @@ export function useConvertFile() {
         voice,
         createdAt: Date.now(),
         extractedText,
-        audioBase64: audioUrl ? undefined : undefined, // stored separately for download
       };
 
       return audio;
